@@ -1,0 +1,50 @@
+# ---
+# -
+#   name: "Play1: Ansible Strategies"
+#   hosts: web1,db1
+
+#   strategy: linear
+#   This strategy will execute the task one by one on each machine and wit for other machine to complete the one  
+
+#   vars:
+#     packages:
+#       - vsftpd
+#       - tree
+#       - httpd
+
+#   tasks:
+#     - name: "First Tasks : Install packages!"
+#       yum:
+#         name: "{{ item }}"
+#         state: present
+#       with_items: 
+#         - "{{ packages }}"
+    
+#     - name: "Second Tasks: Create File"
+#       command: touch /tmp/ansible_folder/Linear_Strategy.txt
+        
+
+---
+-
+  name: "Play1: Ansible Strategies"
+  hosts: web1,db1
+
+  strategy: free
+  # This strategy will execute the task independenlty on each machine and will not wait for other machine to complete the one  
+
+  vars:
+    packages:
+      - vsftpd
+      - tree
+      - httpd
+
+  tasks:
+    - name: "First Tasks : Install packages!"
+      yum:
+        name: "{{ item }}"
+        state: absent #present
+      with_items: 
+        - "{{ packages }}"
+    
+    - name: "Second Tasks: Create File"
+      command: rm -rf /tmp/ansible_folder/Linear_Strategy.txt

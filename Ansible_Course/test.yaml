@@ -1,0 +1,52 @@
+-
+  name: "Play1 : Create Folder"
+  hosts: web1
+  tasks:
+    - name: "Creating Directory on webservers"
+      command: mkdir -p /tmp/ansible_folder create=/tmp/ansible_folder
+      register: result
+    - debug: msg="{{ result.stdout }}"
+
+-
+  name: "Play2: Create File"
+  hosts: web1
+  tasks:
+    - name: "Creating File on webservers"
+      command: touch ansible_file.txt chdir=/tmp/ansible_folder
+
+# -
+#   name: "Play3 : Delete File"
+#   hosts: web1
+#   tasks:
+#     - name: "Deleting File on webservers"
+#       command: rm -rf /tmp/ansible_folder/ansible_file.txt
+#       register: result
+#     - debug: msg="{{ result.stdout }}"
+
+-
+  name: "Play4 : Copy File"
+  hosts: web1
+  tasks:
+    - name: "Copying File on webservers"
+      command: cp -f /tmp/ansible_folder/ansible_file.txt /root/
+
+-
+  name: "Play5 : Copy File"
+  hosts: web1
+  tasks:
+    - name: "Copying /etc/hosts File on webservers at /tmp/ansible_folder"
+      command: cp -f /etc/hosts /tmp/ansible_folder/
+
+- name: "Play5 : List Directories"
+  hosts: web1
+  tasks:
+    - name: "List the Folder /tmp/ansible_folder from webservers"
+      find:
+        paths: "/tmp/ansible_folder"
+        recurse: yes
+        file_type: directory
+      register: directories_found
+
+    - name: Display the list of directories
+      debug:
+        var: directories_found.files

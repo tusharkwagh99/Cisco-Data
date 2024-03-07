@@ -1,0 +1,9 @@
+---
+-
+  name: "Play1 : Create Folder"
+  hosts: web1
+  tasks:
+    - name: "Creating Directory on webservers"
+      command: mkdir -p /tmp/ansible_folder/test1
+      register: result
+    - debug: msg="{{ result.stdout }}"

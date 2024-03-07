@@ -1,0 +1,11 @@
+---
+-
+  name: "Play1 : Error Handling"
+  hosts: web1,db1
+  tasks:
+    - name: "Task-1 : Error Handling"
+      command: touch /tmp/ansible_folder/test/test.txt
+      ignore_errors: True
+    
+    - name: "Task-2 : Create File 2"
+      command: touch /tmp/ansible_folder/test.txt

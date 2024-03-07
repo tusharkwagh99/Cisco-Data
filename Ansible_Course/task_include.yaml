@@ -1,0 +1,8 @@
+---
+- name: "Play1: Include files and tasks"
+  hosts: web1
+  vars_files:
+    - /root/Ansible_Course/variables.yaml
+  
+  tasks:
+    - include: /root/Ansible_Course/task_list.yaml

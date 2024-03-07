@@ -1,0 +1,23 @@
+file_list:
+  - name: file1.txt
+    content: "This is file 1 content."
+  - name: file2.txt
+    content: "This is file 2 content."
+  - name: file3.txt
+    content: "This is file 3 content."
+  - name: file4.txt
+    content: "This is file 4 content."
+  - name: file5.txt
+    content: "This is file 5 content."
+  - name: file6.txt
+    content: "This is file 6 content."
+  - name: file7.txt
+    content: "This is file 7 content."
+  - name: file8.txt
+    content: "This is file 8 content."
+  - name: file9.txt
+    content: "This is file 9 content."
+  - name: file10.txt
+    content: "This is file 10 content."
+
+destination_directory: "/tmp/ansible_folder"

@@ -1,0 +1,4 @@
+webserver_filename: "web_server_play_test"
+database_filename: "db_server_play_test"
+sql_filename: "sql_server_play_test"
+destination_directory: "/tmp/ansible_folder"

@@ -1,0 +1,38 @@
+---
+###############################
+# Vault is used to encrypt the inventory Data, passwords and sensetive data used in Ansible Plabooks
+# It's a tool for securely storing and sharing secrets.
+# https://www.vaultproject.io/docs/install/index.html
+
+# 1: Command to create encrypted file
+# $ ansible-vault encrypt inventory.txt --output encrypt-inventory.txt 
+# It will promt to apply password for file, please save the password or keep it in ur mind : Csco,123
+
+# 2: Command to retrive encrypted data
+# $ ansible-vault view  ../encrypt-inventory.txt
+# It will promt for password to unlock, please save the password or keep it in ur mind : Csco,123
+
+# 3: To run the ansible playbook use the below command"
+# $ ansible-playbook playbook.yaml -i encrypt-inventory.txt --ask-vault-pass
+###############################
+
+- name: "Play1 : Create Files Using Value Inventory"
+  hosts: web1
+  become: true
+
+  tasks:
+    - name: Include variables
+      ansible.builtin.include_vars:
+        file: /root/Ansible_Course/variables.yaml
+
+    - name: Create files
+      ansible.builtin.file:
+        path: "{{ destination_directory }}/{{ item.name }}"
+        state: touch
+      with_items : "{{ file_list }}"
+
+    - name: Write content to files
+      ansible.builtin.copy:
+        content: "{{ item.content }}"
+        dest: "{{ destination_directory }}/{{ item.name }}"
+      with_items: "{{ file_list }}"

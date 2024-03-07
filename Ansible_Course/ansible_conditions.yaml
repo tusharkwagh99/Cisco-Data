@@ -1,0 +1,67 @@
+# ---
+# - name: "Play1: Use of Ansible Conditions"
+#   hosts: web1
+#   vars:
+#     age: 11
+#   tasks:
+#     - name: "Creaet file if Conditions is satisfied"
+#       command: touch /tmp/ansible_folder/18.txt
+#       when: age == 18
+    
+#     - name: "Creaet file if Conditions is satisfied"
+#       command: touch /tmp/ansible_folder/19.txt
+#       when: age > 18
+    
+#     - name: "Creaet file if Conditions is satisfied"
+#       command: touch /tmp/ansible_folder/less_than_18.txt
+#       when: age < 18
+
+#     - name: "Creaet file if Conditions is satisfied"
+#       command: touch /tmp/ansible_folder/between_10_and_20.txt
+#       when: age > 10 and age < 20
+
+#     - name: "Creaet file if Conditions is satisfied"
+#       command: touch /tmp/ansible_folder/10_or_11.txt
+#       when: age == 10 and age == 11
+
+# Example: Register Veriables
+# ---
+# - name: "Play2: Use of Register Veriables"
+#   hosts: web1
+#   vars:
+#     service_name: docker
+#   tasks:
+#     - name: Check service status
+#       command: "systemctl status {{ service_name }}"
+#       register: service_status
+
+#     - name: Display service status
+#       debug:
+#         var: service_status.stdout_lines
+
+# Example: Register Veriables and Perform the tasks based on that
+---
+- name: "Play2: Use of Register Veriables"
+  hosts: web1
+  vars:
+    service_name: docker
+  tasks:
+    - name: Check service status
+      command: "systemctl is-active docker"
+      register: docker_status
+
+    - name: Display Docker Service Status
+      debug:
+        var: docker_status.stdout
+
+    - name: Perform tasks based on Docker Service Status
+      block:
+        - name: Create File if Docker Service is stopped
+          command: touch /tmp/ansible_folder/docker_stopped.txt
+          command: "systemctl start {{ service_name }}"
+          when: docker_status.stdout == "inactive"
+
+        - name: Stop Docker Service if it's running
+          command: touch /tmp/ansible_folder/docker_running.txt
+          command: "systemctl stop {{ service_name }}"
+          when: docker_status.stdout == "active"

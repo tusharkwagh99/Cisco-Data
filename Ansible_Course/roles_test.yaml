@@ -1,0 +1,13 @@
+---
+-
+  name: "Play1: Run the roles from playbook"
+  hosts: web1
+  vars:
+    count: 3
+  vars_files:
+    - /root/Ansible_Course/variables2.yaml
+  roles:
+    - Webserver
+    - Database
+    - Sql
+

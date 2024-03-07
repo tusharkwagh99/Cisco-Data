@@ -1,0 +1,66 @@
+---
+-
+  name: "Play1 : Jinja Template Testing"
+  hosts: web1
+  vars:
+    my_name: Tushar
+    my_age: 33
+    dummy_list1:
+      - 1
+      - 10
+      - 20
+      - 30
+      - 40
+    dummy_list2:
+      - 2
+      - 20
+      - 40
+      - 60
+      - 20
+  tasks:
+  # testing string related jinja template tests
+    - name: "Task-1: string operation-1"
+      debug:
+        msg: "Hello {{ my_name }} and my age is {{ my_age }}"
+    
+    - name: "Task-2: string operation-2"
+      debug:
+        msg: "Hello {{ my_name | upper }} "
+    
+    - name: "Task-3: string operation-3"
+      debug:
+        msg: "Hello {{ my_name | lower }} "
+    
+    - name: "Task-4: string operation-4"
+      debug:
+        msg: "Hello {{ my_name | replace('Tushar', 'Pooja') }} "
+    
+    - name: "Task-5: string operation-5"
+      debug:
+        msg: "The Max Value in dummy_list1 is : {{ dummy_list1 | max }} "
+    
+    - name: "Task-6: string operation-6"
+      debug:
+        msg: "The Min Value in dummy_list1 is : {{ dummy_list1 | min }} "
+    
+    - name: "Task-7: string operation-7"
+      debug:
+        msg: "The Unique Values in dummy_list2 is : {{ dummy_list2 | unique }} "
+    
+    - name: "Task-8: string operation-8"
+      debug:
+        msg: "The Union of Values in dummy_list1 and dummy_list2 is : {{ dummy_list1 | union(dummy_list2) }} "
+    
+    - name: "Task-9: string operation-9"
+      debug:
+        msg: "The Intersect of Values in dummy_list1 and dummy_list2 is: {{ dummy_list1 | intersect(dummy_list2) }} "
+    
+    - name: "Task-10: string operation-10"
+      debug:
+        msg: "The new Random number is : {{ 100 | random }} "
+    
+    - name: "Task-10: string operation-11"
+      debug:
+        msg: "The base filename is : {{ '/etc/keepalived/keepalived.conf' | basename }} "
+    
+

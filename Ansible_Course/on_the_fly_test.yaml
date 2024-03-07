@@ -1,0 +1,7 @@
+---
+-
+  name: "Play2: Create File"
+  hosts: web1
+  tasks:
+    - name: "Creating File on webservers"
+      command: touch /tmp/ansible_folder/ansible_file.txt

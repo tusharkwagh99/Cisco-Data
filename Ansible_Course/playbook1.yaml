@@ -1,0 +1,225 @@
+# -
+#   name: "Play1 : Create Folder"
+#   hosts: web1
+#   tasks:
+#     - name: "Creating Directory on webservers"
+#       command: mkdir -p /tmp/ansible_folder create=/tmp/ansible_folder
+#       register: result
+#     - debug: msg="{{ result.stdout }}"
+
+# -
+#   name: "Play2: Create File"
+#   hosts: web1
+#   tasks:
+#     - name: "Creating File on webservers"
+#       command: touch ansible_file.txt chdir=/tmp/ansible_folder
+
+# # -
+# #   name: "Play3 : Delete File"
+# #   hosts: web1
+# #   tasks:
+# #     - name: "Deleting File on webservers"
+# #       command: rm -rf /tmp/ansible_folder/ansible_file.txt
+# #       register: result
+# #     - debug: msg="{{ result.stdout }}"
+
+# -
+#   name: "Play4 : Copy File"
+#   hosts: web1
+#   tasks:
+#     - name: "Copying File on webservers"
+#       command: cp -f /tmp/ansible_folder/ansible_file.txt /root/
+
+# -
+#   name: "Play5 : Copy File"
+#   hosts: web1
+#   tasks:
+#     - name: "Copying /etc/hosts File on webservers at /tmp/ansible_folder"
+#       command: cp -f /etc/hosts /tmp/ansible_folder/
+
+# - name: "Play5 : List Directories"
+#   hosts: web1
+#   tasks:
+#     - name: "List the Folder /tmp/ansible_folder from webservers"
+#       find:
+#         paths: "/tmp/ansible_folder"
+#         recurse: yes
+#         file_type: directory
+#       register: directories_found
+
+#     - name: Display the list of directories
+#       debug:
+#         var: directories_found.files
+
+# ---
+# - name: "Play6 : List Content of Directory"
+#   hosts: web1
+#   vars:
+#     directory: /tmp/ansible_folder
+
+#   tasks:
+#     - command: "ls {{ directory }}"
+#       register: dir_out
+
+#     - debug:
+#         var: "{{ item }}"
+#       with_items: "{{ dir_out.stdout_lines }}"
+
+
+# ---
+# - name: "Play7 :List Files in a Directory"
+#   hosts: web1
+#   vars:
+#     target_directory: "/tmp/ansible_folder"
+
+#   tasks:
+#     - name: Find files in the specified directory
+#       find:
+#         paths: "{{ target_directory }}"
+#         recurse: no
+#         file_type: file
+#       register: files_found
+
+#     - name: Display the list of files
+#       debug:
+#         var: files_found.files
+#---
+#-
+#  name: "Play8: Copy files from one host to another host"
+#  hosts: web1
+#  tasks:
+#    - name: "Copying File From One Host to Another Host"
+#      copy:
+#        src: /root/Ansible_Course/test.yaml
+#        dest: /tmp/ansible_folder/test.yaml
+#        owner: root
+#        group: root
+#        mode: '0644'
+#        backup: yes
+#        remote_src: yes
+#      tags:
+#        - dir_not_exist
+#
+# ---
+# -
+#   name: "Play8: Copy files within a target host"
+#   hosts: web1
+#   tasks:
+#     - name: "Copying File Within a Targeted Host"
+#       copy:
+#         src: /tmp/ansible_folder/test.yaml
+#         dest: /root/test.yaml
+#         owner: root
+#         group: root
+#         mode: '0644'
+#         backup: yes
+#         remote_src: yes
+# #      tags:
+# #        - dir_not_exist
+#
+
+# ---
+# - name: "Play9: Copy File to Target Machines"
+#   hosts: web1
+#   tasks:
+#     - name: Copy file from controller to target machine
+#       copy:
+#         src: /root/Ansible_Course/test.yaml  # Path to the file on the controller node
+#         dest: /tmp/ansible_folder/test.yaml  # Destination path on the target machine
+#         # Below are the optional parameters : Use only when required
+#         owner: root
+#         group: root
+
+# ---
+# - name: "Play10: Write text or code to some file"
+#   hosts: web1
+#   tasks:
+#     - name: Write text or code to some file only once
+#       lineinfile:
+#         path: /tmp/ansible_folder/test.yaml  # Path to the file on the controller node
+#         line: Tushar
+
+# ---
+# - name: "Play11: Test Script Module"
+#   hosts: web1
+#   tasks:
+#     - name: Creaet and Write into a file using Shell Script only if the below mentioned file does not exist
+#       script: testScript.sh Tushar creates=/tmp/ansible_folder/test.yaml
+# ---
+# - name: "Play12: Test Script Module"
+#   hosts: web1
+#   tasks:
+#     - name: Creaet and Write into a file using Shell Script only if the below mentioned file is exist and change the dir before the operation
+#       script: testScript.sh Tushar removes=/tmp/ansible_folder/test.yaml chdir=/tmp/ansible_folder/
+# ---
+# - name: "Play13: Check Service Module"
+#   hosts: web1
+#   tasks:
+#     - name: Start and Stop the Docker Service
+#       service:
+#         name: docker
+#         state: stopped
+
+# ---
+# - name: "Play14: Check USer Module"
+#   hosts: web1
+#   tasks:
+#     - name: Create dummy user in the web server
+#       user:
+#         name: "tushar"
+#         state: present
+#         password: "gtbudo3uhrivhjyziqxknjmvsuwvqfynwwlxtuqittmgtwwyrFzmqssjiwTdy6gnzcsimnypcd7aufnodyqvbaHnqphwvee.dzzw"
+
+# ---
+# - name: "Play15: Check USer Module"
+#   hosts: web1
+#   tasks:
+#     - name: Delete dummy user alsong with home directory from web server
+#       user:
+#         name: "tushar"
+#         state: absent
+#         remove: yes
+
+#---
+#- name: "Play16: Use of Veriables"
+#  hosts: web1
+#  vars:
+#    servicename: docker
+#  tasks:
+#    - name: Start and Stop Service
+#      service:
+#        name: "{{ servicename }}"
+#        state: started
+#
+
+# ---
+# - name: "Play17: Use of Ansible Loops"
+#   hosts: web1
+#   # vars:
+#   #   servicename: docker
+#   tasks:
+#     - name: "Install and Uninstall Service using Loops"
+#       yum:
+#         name: "{{ item }}"
+#         state: present
+#       with_items:
+#         - vsftpd
+#         - tree
+#         - htop
+
+# Example: Ansible Loops with pre defined variables"
+---
+- name: "Play17: Use of Ansible variables(Array) and Loops"
+  hosts: web1
+  vars:
+    packages:
+      - vsftpd
+      - tree
+      - httpd
+  tasks:
+    - name: "Install and Uninstall Service Using variables in Loops"
+      yum:
+        name: "{{ item }}"
+        state: absent #present
+      with_items:
+        - "{{ packages }}"

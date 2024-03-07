@@ -1,0 +1,8 @@
+- name: Create files
+  command: touch "{{ destination_directory }}/{{ item.name }}"
+  with_items: "{{ file_list }}"
+- name: Write content to files
+  ansible.builtin.copy:
+    content: "{{ item.content }}"
+    dest: "{{ destination_directory }}/{{ item.name }}"
+  with_items: "{{ file_list }}"

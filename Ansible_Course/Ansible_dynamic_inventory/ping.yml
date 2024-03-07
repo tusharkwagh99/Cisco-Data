@@ -1,0 +1,14 @@
+# ping.yml
+# ansible-playbook -i dynamic_inventory.py ping.yml
+---
+- name: "Play1 Ping Servers"
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: "Display Hosts"
+      debug:
+        var: all
+
+    - name: "Ping test"
+      ansible.builtin.ping:
+

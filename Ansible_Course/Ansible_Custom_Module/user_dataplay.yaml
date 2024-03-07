@@ -1,0 +1,8 @@
+---
+-
+  name: "Play-1: Test Custome Module"
+  hosts: web1
+  tasks:
+    - userdata: 
+        name: Pooja 
+        age: 27

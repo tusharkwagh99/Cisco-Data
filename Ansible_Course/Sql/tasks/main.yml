@@ -1,0 +1,13 @@
+---
+# tasks file for Sql
+-
+#  name: "Create File"
+#  hosts: web1
+#  gather_facts: no
+#  vars:
+#    count: 3
+#  tasks:
+- name: "Creating File on SQL servers"
+  command: touch "{{ destination_directory }}/{{ sql_filename }}{{ item }}.txt"
+  loop: "{{ range(1, count + 1) | list }}"
+

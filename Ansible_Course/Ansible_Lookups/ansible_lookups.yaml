@@ -1,0 +1,10 @@
+---
+- name: "Play1 : Test Connectivity Using Ansible Lookups"
+  hosts: web1
+  become: true
+  vars:
+    ansible_ssh_pass: "{{ lookup('csvfile', 'web1 file=credentials.csv delimiter=,') }}"
+
+  tasks:
+    - name: Creaet Dummy file on Webserver
+      command: touch /root/Ansible_Course/csv_lookup.txt

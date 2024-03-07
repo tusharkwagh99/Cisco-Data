@@ -1,0 +1,11 @@
+---
+- name: Example Playbook with Dynamic Inventory
+  hosts: web
+  gather_facts: true
+
+  tasks:
+    - name: Print Hostname
+      debug:
+        var: inventory_hostname
+
+#  ansible-playbook -i dynamic_inventory.sh example_playbook.yml

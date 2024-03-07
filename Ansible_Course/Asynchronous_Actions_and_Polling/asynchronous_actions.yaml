@@ -1,0 +1,34 @@
+# ---
+# - 
+#   name: "Play1: Play to check Asynchronous Actions and Polling"
+#   hosts: web1
+#   tasks:
+#     - name: "Wait Synchronous Actions"
+#       command: sleep 120
+    
+#     - name: "Create file after wait"
+#       command: touch /tmp/ansible_folder/wait_action.txt
+
+# - 
+#   name: "Play2: Play to check Asynchronous Actions and Polling"
+#   hosts: web1
+#   tasks:
+#     - name: "Asynchronous Actions and Polling"
+#       command: sleep 60
+#       async: 70
+#       poll: 35
+#     - name: "Create file Asynchronously"  
+#       command: touch /tmp/ansible_folder/async_action.txt
+
+-
+  name: "Play2: Play to check Asynchronous Actions and Polling"
+  hosts: web1
+  tasks:
+    - name: "Asynchronous Actions fire and Forget"
+      command: sleep 60
+      async: 70
+      poll: 0
+      
+    - name: "Create file Asynchronously"
+      command: touch /tmp/ansible_folder/async_action_fire_and_forget.txt
+
