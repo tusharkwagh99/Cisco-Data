@@ -1,0 +1,51 @@
+pipeline{
+    agent any
+    stages{
+        stage("A"){
+            steps{
+                echo "========executing A========"
+            }
+            
+        }
+        stage("B"){
+            steps{
+                echo "========executing B========"
+                sh 'pwd'
+            }
+            
+        }
+        stage("C"){
+            steps{
+                echo "========executing C========"
+                sh '''pwd
+                ls
+                date 
+                cat'''
+            }
+            
+        }
+        stage("D"){
+            steps{
+                echo "========executing D========"
+            }
+            
+        }
+        stage("E"){
+            steps{
+                echo "========executing E========"
+            }
+            
+        }
+    }
+    post{
+        always{
+            echo "========always========"
+        }
+        success{
+            echo "========pipeline executed successfully ========"
+        }
+        failure{
+            echo "========pipeline execution failed========"
+        }
+    }
+}
