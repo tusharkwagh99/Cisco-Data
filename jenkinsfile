@@ -1,0 +1,67 @@
+pipeline {
+    agent any
+    
+    environment{
+        name = "Tushar"
+        age = "33"
+        profile = "Technical Lead"
+    }
+    
+    parameters{
+    string(name: 'person', defaultValue: 'Tushar Wagh', description: 'Who are you?')
+    booleanParam(name: 'isMale', defaultValue: true, description: '')
+    choice(name: 'City', choices: ['Pune', 'Mumbai', 'Dehli'], description: 'Which city you belongs to ?')
+    }
+
+    stages {
+        stage('Run A Command') {
+            steps {
+                echo 'Hello From Test'
+                sh 'date'
+                sh '''
+                pwd
+                ls -ltrh
+                cat /etc/hosts
+                '''
+            }
+        }
+        stage('Print environmental Variables!') {
+            
+            environment{
+            username = "tusharkwagh99"
+            }
+            steps {
+                echo 'Hello from Build'
+                sh 'echo "${BUILD_ID}"'
+                sh 'echo "${name}"'
+                sh 'echo "${age}"'
+                sh 'echo "${profile}"'
+                sh 'echo "${username}"'
+            }
+        }
+        stage('Get Parameters from User') {
+            steps {
+                echo 'Hello from Deploy to Test'
+                sh 'echo "${username}"'
+                sh 'echo "${person}"'
+                sh 'echo "${isMale}"'
+                sh 'echo "${City}"'
+            }
+        }
+        stage('Continue ?') {
+            input{
+                message "Should we continue ?"
+                ok "Yes we should!"
+            }
+            
+            steps {
+                echo 'Hello from Continue Block'
+            }
+        }
+        stage('Deploy on Prod') {
+            steps {
+                echo 'Hello from Deploy to Prod'
+            }
+        }
+    }
+}
