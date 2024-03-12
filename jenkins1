@@ -39,17 +39,16 @@ pipeline{
             
         }
         stage("E"){
-            environment {
-              Name = "Tushar"
-              LastName = "Wagh"
+            environment{
+            Name = "Tushar"
+            LastName = "Wagh"
             }
             steps{
                 echo "========executing E========"
                 input 'Do you want to Continue ?'
-                echo '"${Name}"'
-                echo '"${LastName}"'
+                sh 'echo "${Name}"'
+                sh 'echo "${LastName}"'
             }
-            
         }
     }
     post{
