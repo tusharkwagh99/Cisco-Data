@@ -31,12 +31,6 @@ pipeline{
                   always {
                     // One or more steps need to be included within each condition's block.
                   }
-                  unstable {
-                    // One or more steps need to be included within each condition's block.
-                  }
-                  aborted {
-                    // One or more steps need to be included within each condition's block.
-                  }
                   success {
                     // One or more steps need to be included within each condition's block.
                   }
