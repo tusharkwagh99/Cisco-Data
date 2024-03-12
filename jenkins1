@@ -27,12 +27,33 @@ pipeline{
         stage("D"){
             steps{
                 echo "========executing D========"
+                post {
+                  always {
+                    // One or more steps need to be included within each condition's block.
+                  }
+                  unstable {
+                    // One or more steps need to be included within each condition's block.
+                  }
+                  aborted {
+                    // One or more steps need to be included within each condition's block.
+                  }
+                  success {
+                    // One or more steps need to be included within each condition's block.
+                  }
+                }
             }
             
         }
         stage("E"){
+            environment {
+              Name = "Tushar"
+              LastName = "Wagh"
+            }
             steps{
                 echo "========executing E========"
+                input 'Do you want to Continue ?'
+                echo '"${Name}"'
+                echo '"${LastName}"'
             }
             
         }
